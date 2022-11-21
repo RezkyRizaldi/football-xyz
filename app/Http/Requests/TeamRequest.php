@@ -20,13 +20,24 @@ class TeamRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => ['required', 'max:255', 'string'],
-            'logo' => ['nullable', 'image', 'max:2048'],
-            'since' => ['required', 'digits:4', 'numeric'],
-            'address' => ['required', 'max:255', 'string'],
-            'city' => ['required', 'max:255', 'string'],
-        ];
+        if (request()->isMethod('PUT')) {
+            return [
+                'name' => ['required', 'max:255', 'string'],
+                'logo' => ['nullable', 'image', 'max:2048'],
+                'since' => ['required', 'digits:4', 'numeric'],
+                'address' => ['required', 'max:255', 'string'],
+                'city' => ['required', 'max:255', 'string'],
+            ];
+        }else{
+            return [
+                'name' => ['required', 'max:255', 'string'],
+                'logo' => ['nullable', 'image', 'max:2048'],
+                'since' => ['required', 'digits:4', 'numeric'],
+                'address' => ['required', 'max:255', 'string'],
+                'city' => ['required', 'max:255', 'string'],
+            ];
+
+        }
     }
 
     protected function failedValidation(Validator $validator): void

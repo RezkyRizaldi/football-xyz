@@ -15,7 +15,7 @@ class PlayerController extends Controller
     public function index(): AnonymousResourceCollection|JsonResponse
     {
         try {
-            return PlayerResource::collection(Player::with(['team', 'goalScorers'])->get());
+            return PlayerResource::collection(Player::with(['team', 'goalScorers'])->paginate(10));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
@@ -47,7 +47,7 @@ class PlayerController extends Controller
     public function show(Player $player): PlayerResource|JsonResponse
     {
         try {
-            return new PlayerResource($player);
+            return new PlayerResource(Player::with(['team', 'goalScorers'])->find($player->id));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
@@ -81,7 +81,7 @@ class PlayerController extends Controller
         try {
             $player->delete();
 
-            return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
+            return response()->json(["status" => TRUE, "message" => "Berhasil Di Hapus"], JsonResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",

@@ -22,7 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('teams/{id}', [TeamController::class, 'update']);
+Route::get('/game-report', [ReportController::class, 'report']);
 Route::apiResource('teams', TeamController::class);
 Route::apiResource('players', PlayerController::class);
 Route::apiResource('games', GameController::class);
-Route::get('/game-report', ReportController::class);

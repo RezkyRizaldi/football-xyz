@@ -17,8 +17,8 @@ class GameController extends Controller
     {
         try {
             return GameResource::collection(
-                Game::with(['teamHome', 'teamAway', 'goalScorers.player'])
-                    ->get()
+                Game::with(['teamHome', 'teamAway', 'goalScorers.player.team'])
+                    ->paginate(10)
             );
         } catch (\Throwable $th) {
             return response()->json([
@@ -72,7 +72,6 @@ class GameController extends Controller
                 foreach ($request->safe()->only(['goal_scorers']) as $key) {
                     $obj = array();
                     $obj['game_id'] = $game->id;
-
                     foreach ($key as $k) {
                         $obj['player_id'] = $k['player_id'];
                         $obj['goal_time'] = $k['goal_time'];
@@ -108,7 +107,7 @@ class GameController extends Controller
                 $game->delete();
             }
 
-            return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
+            return response()->json(["status" => TRUE, "message" => "Berhasil Di Hapus"], JsonResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",

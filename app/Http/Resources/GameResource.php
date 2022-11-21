@@ -13,6 +13,20 @@ class GameResource extends JsonResource
         $teamHome = new TeamResource($this->whenLoaded('teamHome'));
         $teamAway = new TeamResource($this->whenLoaded('teamAway'));
         $isFinished = $this->date <= now()->format('Y-m-d H:i:s');
+        $is_winner = "-";
+        $is_lose = "-";
+        if($isFinished){
+            if($this->home_score >  $this->away_score){
+                $is_winner = "Team Home Winner";
+                $is_lose = "Team Away Lose";
+            }elseif($this->home_score < $this->away_score){
+                $is_winner = "Team Away Winner";
+                $is_lose = "Team Home Lose";
+            }else{
+                $is_winner = "Draw";
+                $is_lose = "Draw";
+            }
+        }
 
         return [
             'id' => $this->id,
@@ -22,7 +36,8 @@ class GameResource extends JsonResource
             'status' => $this->when($isFinished, 'finished', 'upcoming'),
             'home_score' => $this->when($isFinished, $this->home_score, "0"),
             'away_score' => $this->when($isFinished, $this->away_score, "0"),
-            'winner' => $this->when($this->home_score !== $this->away_score, $this->when((int) $this->home_score > (int) $this->away_score, $teamHome, $teamAway), null),
+            'is_winner' => $is_winner,
+            'is_lose' => $is_lose,
             'goal_scorers' => $this->when($isFinished, GoalScorerResource::collection($this->whenLoaded('goalScorers')), []),
             'created_at' => $this->whenNotNull($this->created_at),
         ];

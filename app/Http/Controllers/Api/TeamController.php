@@ -8,6 +8,7 @@ use App\Http\Resources\TeamResource;
 use App\Models\Player;
 use App\Models\Team;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class TeamController extends Controller
     public function index(): AnonymousResourceCollection|JsonResponse
     {
         try {
-            return TeamResource::collection(Team::with(['players'])->get());
+            return TeamResource::collection(Team::with(['players'])->paginate(10));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
@@ -39,7 +40,6 @@ class TeamController extends Controller
 
                 $validated['logo'] = basename($path);
             }
-
             $teams = Team::create($validated);
 
             DB::commit();
@@ -58,7 +58,7 @@ class TeamController extends Controller
     public function show(Team $team): TeamResource|JsonResponse
     {
         try {
-            return new TeamResource($team);
+            return new TeamResource(Team::with(['players'])->find($team->id));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
@@ -109,9 +109,8 @@ class TeamController extends Controller
                 Player::whereIn('team_id', $id)->delete();
 
                 $team->delete();
+                return response()->json(["status" => TRUE, "message" => "Berhasil Di Hapus"], JsonResponse::HTTP_NOT_FOUND);
             }
-
-            return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
