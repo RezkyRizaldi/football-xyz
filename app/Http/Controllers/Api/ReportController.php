@@ -14,17 +14,17 @@ class ReportController extends Controller
         try {
             $games = Game::get();
             $players = Player::selectRaw("players.team_id, players.name, teams.name as team_name, COUNT('goal_scorers.player_id') as total_goals")
-                ->join("teams", "players.team_id", "=", "teams.id")
-                ->join("goal_scorers", "players.id", "=", "goal_scorers.player_id")
-                ->orderByDesc("total_goals")
-                ->groupBy("goal_scorers.player_id")
+                ->join('teams', 'players.team_id', '=', 'teams.id')
+                ->join('goal_scorers', 'players.id', '=', 'goal_scorers.player_id')
+                ->orderByDesc('total_goals')
+                ->groupBy('goal_scorers.player_id')
                 ->get();
 
             if (!empty($games) && !empty($players)) {
                 foreach ($games as $key => $value) {
                     foreach ($players as $player) {
                         if ($value->date <= now()->format('Y-m-d H:i:s')) {
-                            $games[$key]->status = "Finished";
+                            $games[$key]->status = 'Finished';
                             $games[$key]->top_scorer = $players[0];
 
                             if ($value->home_score >  $value->away_score) {
@@ -40,11 +40,11 @@ class ReportController extends Controller
                                     $games[$key]->loser = $player->team_name;
                                 }
                             } else {
-                                $games[$key]->winner = "Draw";
-                                $games[$key]->loser = "Draw";
+                                $games[$key]->winner = 'Draw';
+                                $games[$key]->loser = 'Draw';
                             }
                         } else {
-                            $games[$key]->status = "Upcoming";
+                            $games[$key]->status = 'Upcoming';
                         }
                     }
                 }
@@ -55,8 +55,7 @@ class ReportController extends Controller
                 ], JsonResponse::HTTP_OK);
             } else {
                 return response()->json([
-                    'data'    => [],
-                    'message' => "Data gagal diambil.",
+                    'message' => 'Data gagal diambil.',
                     'success'  => FALSE,
                 ], JsonResponse::HTTP_FORBIDDEN);
             }

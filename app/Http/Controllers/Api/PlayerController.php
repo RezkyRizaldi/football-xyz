@@ -82,8 +82,8 @@ class PlayerController extends Controller
             $player->delete();
 
             return response()->json([
-                "message" => "Data berhasil Dihapus.",
-                "status" => TRUE,
+                'message' => 'Data berhasil Dihapus.',
+                'status' => TRUE,
             ], JsonResponse::HTTP_NO_CONTENT);
         } catch (\Throwable $th) {
             return response()->json([

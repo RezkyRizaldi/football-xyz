@@ -110,14 +110,14 @@ class TeamController extends Controller
                 $team->delete();
 
                 return response()->json([
-                    "message" => "Data berhasil dihapus.",
-                    "status" => TRUE,
+                    'message' => 'Data berhasil dihapus.',
+                    'status' => TRUE,
                 ], JsonResponse::HTTP_NO_CONTENT);
             }
 
             return response()->json([
-                "message" => "Data tidak ditemukan.",
-                "status" => FALSE,
+                'message' => 'Data tidak ditemukan.',
+                'status' => FALSE,
             ], JsonResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             return response()->json([

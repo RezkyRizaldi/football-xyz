@@ -105,12 +105,17 @@ class GameController extends Controller
                 GoalScorer::whereIn('game_id', $id)->delete();
 
                 $game->delete();
+
+                return response()->json([
+                    'message' => 'Data berhasil dihapus.',
+                    'status' => TRUE,
+                ], JsonResponse::HTTP_NO_CONTENT);
             }
 
             return response()->json([
-                "message" => "Data berhasil Dihapus.",
-                "status" => TRUE,
-            ], JsonResponse::HTTP_NO_CONTENT);
+                'message' => 'Data tidak ditemukan.',
+                'status' => FALSE,
+            ], JsonResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
