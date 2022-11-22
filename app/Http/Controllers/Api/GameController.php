@@ -23,7 +23,7 @@ class GameController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_NOT_FOUND);
         }
     }
@@ -43,7 +43,7 @@ class GameController extends Controller
 
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_FORBIDDEN);
         }
     }
@@ -55,7 +55,7 @@ class GameController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_NOT_FOUND);
         }
     }
@@ -91,7 +91,7 @@ class GameController extends Controller
 
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_FORBIDDEN);
         }
     }
@@ -108,18 +108,18 @@ class GameController extends Controller
 
                 return response()->json([
                     'message' => 'Data berhasil dihapus.',
-                    'status' => TRUE,
+                    'status' => true,
                 ], JsonResponse::HTTP_NO_CONTENT);
             }
 
             return response()->json([
                 'message' => 'Data tidak ditemukan.',
-                'status' => FALSE,
+                'status' => false,
             ], JsonResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_FORBIDDEN);
         }
     }

@@ -33,7 +33,7 @@ class ReportController extends Controller
                                 } else {
                                     $games[$key]->loser = $player;
                                 }
-                            } else if ($value->home_score < $value->away_score) {
+                            } elseif ($value->home_score < $value->away_score) {
                                 if ($value->team_away_id == $player->team_id) {
                                     $games[$key]->winner = $player->team_name;
                                 } else {
@@ -51,18 +51,18 @@ class ReportController extends Controller
 
                 return response()->json([
                     'data'    => $games,
-                    'success'  => TRUE,
+                    'success'  => true,
                 ], JsonResponse::HTTP_OK);
             } else {
                 return response()->json([
                     'message' => 'Data gagal diambil.',
-                    'success'  => FALSE,
+                    'success'  => false,
                 ], JsonResponse::HTTP_FORBIDDEN);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success'  => FALSE,
+                'success'  => false,
             ], JsonResponse::HTTP_NOT_FOUND);
         }
     }

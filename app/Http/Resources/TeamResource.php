@@ -28,7 +28,7 @@ class TeamResource extends JsonResource
     public function with($request): array
     {
         return [
-            'success' => TRUE,
+            'success' => true,
         ];
     }
 }

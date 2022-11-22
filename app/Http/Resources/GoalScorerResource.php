@@ -10,7 +10,6 @@ class GoalScorerResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
-
         return [
             'id' => $this->id,
             'goal_time' => $this->goal_time,
@@ -23,7 +22,7 @@ class GoalScorerResource extends JsonResource
     public function with($request): array
     {
         return [
-            'success' => TRUE,
+            'success' => true,
         ];
     }
 }

@@ -46,7 +46,7 @@ class PlayerRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'message' => 'Validation errors',
-            'success' => FALSE,
+            'success' => false,
             'data' => $validator->errors(),
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }

@@ -19,7 +19,7 @@ class PlayerController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_NOT_FOUND);
         }
     }
@@ -39,7 +39,7 @@ class PlayerController extends Controller
 
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_FORBIDDEN);
         }
     }
@@ -51,7 +51,7 @@ class PlayerController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_NOT_FOUND);
         }
     }
@@ -71,7 +71,7 @@ class PlayerController extends Controller
 
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_FORBIDDEN);
         }
     }
@@ -83,12 +83,12 @@ class PlayerController extends Controller
 
             return response()->json([
                 'message' => 'Data berhasil Dihapus.',
-                'status' => TRUE,
+                'status' => true,
             ], JsonResponse::HTTP_NO_CONTENT);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
-                'success' => FALSE,
+                'success' => false,
             ], JsonResponse::HTTP_FORBIDDEN);
         }
     }
