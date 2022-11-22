@@ -22,8 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('teams/{id}', [TeamController::class, 'update']);
-Route::get('/game-report', [ReportController::class, 'report']);
-Route::apiResource('teams', TeamController::class);
-Route::apiResource('players', PlayerController::class);
-Route::apiResource('games', GameController::class);
+Route::post('teams/{team}', [TeamController::class, 'update'])->name('teams.update')->withTrashed();
+Route::get('/game-report', ReportController::class)->withTrashed();
+Route::apiResource('teams', TeamController::class)->except(['update'])->withTrashed();
+Route::apiResource('players', PlayerController::class)->withTrashed();
+Route::apiResource('games', GameController::class)->withTrashed();

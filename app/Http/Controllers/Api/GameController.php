@@ -107,7 +107,10 @@ class GameController extends Controller
                 $game->delete();
             }
 
-            return response()->json(["status" => TRUE, "message" => "Berhasil Di Hapus"], JsonResponse::HTTP_NOT_FOUND);
+            return response()->json([
+                "message" => "Data berhasil Dihapus.",
+                "status" => TRUE,
+            ], JsonResponse::HTTP_NO_CONTENT);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => "error: {$th->getMessage()}",
